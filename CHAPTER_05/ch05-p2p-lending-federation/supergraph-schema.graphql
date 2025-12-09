@@ -1,0 +1,180 @@
+schema
+  @link(url: "https://specs.apollo.dev/link/v1.0")
+  @link(url: "https://specs.apollo.dev/join/v0.3", for: EXECUTION)
+{
+  query: Query
+  mutation: Mutation
+}
+
+directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+directive @join__field(graph: join__Graph, requires: join__FieldSet, provides: join__FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet, extension: Boolean! = false, resolvable: Boolean! = true, isInterfaceObject: Boolean! = false) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+scalar join__FieldSet
+
+enum join__Graph {
+  USERS @join__graph(name: "users", url: "http://users-service:8081/graphql")
+  LOANS @join__graph(name: "loans", url: "http://loans-service:8082/graphql")
+}
+
+scalar link__Import
+
+enum link__Purpose {
+  SECURITY
+  EXECUTION
+}
+
+type Query
+  @join__type(graph: USERS)
+  @join__type(graph: LOANS)
+{
+  user(id: ID!): User @join__field(graph: USERS)
+  users: [User!]! @join__field(graph: USERS)
+  verifiedLenders: [User!]! @join__field(graph: USERS)
+  verifiedBorrowers: [User!]! @join__field(graph: USERS)
+  loan(id: ID!): Loan @join__field(graph: LOANS)
+  loans: [Loan!]! @join__field(graph: LOANS)
+  loansByStatus(status: LoanStatus!): [Loan!]! @join__field(graph: LOANS)
+  availableLoans: [Loan!]! @join__field(graph: LOANS)
+}
+
+type Mutation
+  @join__type(graph: USERS)
+  @join__type(graph: LOANS)
+{
+  createUser(input: CreateUserInput!): UserResponse! @join__field(graph: USERS)
+  createLoanRequest(input: CreateLoanInput!): LoanResponse! @join__field(graph: LOANS)
+  fundLoan(loanId: ID!, lenderId: ID!): LoanResponse! @join__field(graph: LOANS)
+}
+
+type User
+  @join__type(graph: USERS, key: "id")
+  @join__type(graph: LOANS, key: "id", extension: true)
+{
+  id: ID!
+  email: String! @join__field(graph: USERS)
+  fullName: String! @join__field(graph: USERS)
+  userType: UserType! @join__field(graph: USERS)
+  lenderProfile: LenderProfile @join__field(graph: USERS)
+  borrowerProfile: BorrowerProfile @join__field(graph: USERS)
+  createdAt: String! @join__field(graph: USERS)
+  reputation: Float! @join__field(graph: USERS)
+  loansAsLender: [Loan!]! @join__field(graph: LOANS)
+  loansAsBorrower: [Loan!]! @join__field(graph: LOANS)
+}
+
+type LenderProfile
+  @join__type(graph: USERS)
+{
+  totalLent: Float!
+  activeLoans: Int!
+  averageReturn: Float!
+  riskTolerance: RiskTolerance!
+  verified: Boolean!
+}
+
+type BorrowerProfile
+  @join__type(graph: USERS)
+{
+  creditScore: Int!
+  totalBorrowed: Float!
+  activeLoans: Int!
+  defaultRate: Float!
+  verified: Boolean!
+  kycStatus: KYCStatus!
+}
+
+type Loan
+  @join__type(graph: LOANS, key: "id")
+{
+  id: ID!
+  amount: Float!
+  interestRate: Float!
+  term: Int!
+  status: LoanStatus!
+  purpose: String!
+  lender: User!
+  borrower: User!
+  createdAt: String!
+  fundedAt: String
+  monthlyPayment: Float!
+  totalRepayment: Float!
+}
+
+enum UserType
+  @join__type(graph: USERS)
+{
+  LENDER @join__enumValue(graph: USERS)
+  BORROWER @join__enumValue(graph: USERS)
+  BOTH @join__enumValue(graph: USERS)
+}
+
+enum RiskTolerance
+  @join__type(graph: USERS)
+{
+  CONSERVATIVE @join__enumValue(graph: USERS)
+  MODERATE @join__enumValue(graph: USERS)
+  AGGRESSIVE @join__enumValue(graph: USERS)
+}
+
+enum KYCStatus
+  @join__type(graph: USERS)
+{
+  PENDING @join__enumValue(graph: USERS)
+  VERIFIED @join__enumValue(graph: USERS)
+  REJECTED @join__enumValue(graph: USERS)
+}
+
+enum LoanStatus
+  @join__type(graph: LOANS)
+{
+  PENDING @join__enumValue(graph: LOANS)
+  FUNDED @join__enumValue(graph: LOANS)
+  ACTIVE @join__enumValue(graph: LOANS)
+  COMPLETED @join__enumValue(graph: LOANS)
+  DEFAULTED @join__enumValue(graph: LOANS)
+}
+
+input CreateUserInput
+  @join__type(graph: USERS)
+{
+  email: String!
+  fullName: String!
+  userType: UserType!
+}
+
+input CreateLoanInput
+  @join__type(graph: LOANS)
+{
+  borrowerId: ID!
+  amount: Float!
+  interestRate: Float!
+  term: Int!
+  purpose: String!
+}
+
+type UserResponse
+  @join__type(graph: USERS)
+{
+  success: Boolean!
+  message: String!
+  user: User
+}
+
+type LoanResponse
+  @join__type(graph: LOANS)
+{
+  success: Boolean!
+  message: String!
+  loan: Loan
+}
