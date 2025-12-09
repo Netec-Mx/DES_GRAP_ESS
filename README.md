@@ -22,7 +22,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 1. Nombre de la práctica](./Laboratorio_1.md) 
+### [Práctica 1. Nombre de la práctica](CHAPTER_01/ch01-investment-portfolio/README.md) 
 
   - **Descripción**: xxx.
 
@@ -30,7 +30,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 2. Nombre de la práctica](./Laboratorio_2.md)
+### [Práctica 2. Nombre de la práctica](CHAPTER_02/ch02-cashback-schema-design/README.md)
 
   - **Descripción**: xxx.
 
@@ -38,7 +38,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 3. Nombre de la práctica](./Laboratorio_3.md)
+### [Práctica 3. Nombre de la práctica](CHAPTER_03/ch03-cashback-dgs-service/README.md)
 
   - **Descripción**: xxx.
 
@@ -46,7 +46,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 3. Nombre de la práctica](./Laboratorio_3.md)
+### [Práctica 3. Nombre de la práctica](CHAPTER_04/ch04-smart-savings-goals/README.md)
 
   - **Descripción**: xxx.
 
@@ -54,7 +54,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 3. Nombre de la práctica](./Laboratorio_3.md)
+### [Práctica 3. Nombre de la práctica](CHAPTER_05/ch05-p2p-lending-federation/README.md)
 
   - **Descripción**: xxx.
 
@@ -62,7 +62,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 3. Nombre de la práctica](./Laboratorio_3.md)
+### [Práctica 3. Nombre de la práctica](CHAPTER_06/ch06-fraud-detection-subscriptions/README.md)
 
   - **Descripción**: xxx.
 
@@ -70,7 +70,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 3. Nombre de la práctica](./Laboratorio_3.md)
+### [Práctica 3. Nombre de la práctica](CHAPTER_07/ch07-expense-analytics-caching/README.md)
 
   - **Descripción**: xxx.
 
@@ -78,7 +78,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 
 
-### [Práctica 3. Nombre de la práctica](./Laboratorio_3.md)
+### [Práctica 3. Nombre de la práctica](CHAPTER_08/ch08-carbon-footprint-governance/README.md)
 
   - **Descripción**: xxx.
 
